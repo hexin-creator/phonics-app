@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="音标起步：包含 20 个英语元音和 28 个辅音的音标学习网页，支持筛选、示例词、发音练习与学习进度。"
+    />
+    <meta name="theme-color" content="#f7f4ed" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title>音标起步 · 英语音标学习</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2320312c'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='38' fill='%23fffdf8'%3E%C9%99%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css?v=20261119f" />
+    <script src="app-v6.js?v=20261119f" defer></script>
+    <script>
+      (function () {
+        window.addEventListener("error", function (event) {
+          var status = document.getElementById("phoneme-count");
+          if (status) {
+            var where = "";
+            if (event.filename) {
+              where =
+                " @ " +
+                event.filename.replace(/^.*[\\/]/, "") +
+                (event.lineno ? ":" + event.lineno : "");
+            }
+            status.textContent =
+              "脚本错误：" + (event.message || "未知错误") + where;
+          }
+        });
+
+        window.addEventListener("load", function () {
+          window.setTimeout(function () {
+            var grid = document.getElementById("phoneme-grid");
+            var status = document.getElementById("phoneme-count");
+            if (grid && status && !grid.querySelector(".phoneme-card")) {
+              if (status.textContent.indexOf("脚本错误：") === -1) {
+                status.textContent = "脚本未执行：请关闭页面后重新打开（v6）";
+              }
+            }
+          }, 2000);
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#phonemes" aria-label="音标起步，返回音标表">
+          <span class="brand-mark" aria-hidden="true">ə</span>
+          <span class="brand-copy">
+            <strong>音标起步</strong>
+            <span>PHONICS START · V6</span>
+          </span>
+        </a>
+
+        <nav class="top-nav" aria-label="主导航">
+          <button
+            class="nav-link is-active"
+            type="button"
+            data-view-target="phonemes"
+            aria-current="page"
+          >
+            <span class="nav-dot" aria-hidden="true"></span>
+            音标表
+          </button>
+          <button class="nav-link" type="button" data-view-target="practice">
+            <span class="nav-dot" aria-hidden="true"></span>
+            练习
+          </button>
+          <button class="nav-link" type="button" data-view-target="progress">
+            <span class="nav-dot" aria-hidden="true"></span>
+            进度
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="app-shell">
+      <section
+        id="view-phonemes"
+        class="view"
+        data-view-panel="phonemes"
+        aria-labelledby="phonemes-title"
+      >
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              零基础也能开始的音标课
+            </p>
+            <h1 id="phonemes-title">
+              把每一个音，<br />
+              读得<span class="mark-text">清楚</span>。
+            </h1>
+            <p class="hero-lede">
+              系统学习 20 个英语元音和 28 个辅音。看一看口型，读一读示例词，再动手标记自己的学习进度。
+            </p>
+            <div class="hero-pills" aria-label="学习内容">
+              <span>48 个国际音标</span>
+              <span>288 个示例词</span>
+              <span>发音要点 + 常见错误</span>
+            </div>
+          </div>
+
+          <aside class="hero-progress" aria-label="我的学习进度">
+            <div class="hero-progress-top">
+              <span class="mini-label">我的学习进度</span>
+              <span class="local-tag">LOCAL</span>
+            </div>
+            <div class="hero-progress-number">
+              <strong id="hero-progress-value">0%</strong>
+              <span>掌握率</span>
+            </div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-label="音标掌握率"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="hero-progress-track"
+            >
+              <span id="hero-progress-bar" style="width: 0%"></span>
+            </div>
+            <div class="hero-progress-meta">
+              <span>已学 <b id="hero-learned-count">0</b> / <b id="hero-total-count">48</b></span>
+              <button class="text-link" type="button" data-view-jump="progress">
+                查看进度
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <p class="hero-progress-note">进度只保存在当前浏览器中。</p>
+          </aside>
+        </div>
+
+        <div class="library-heading">
+          <div>
+            <p class="section-kicker">PHONEME LIBRARY</p>
+            <h2>音标表</h2>
+          </div>
+          <p class="result-count" id="phoneme-count" aria-live="polite">正在读取音标…</p>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-scroller">
+            <div class="filter-group" role="group" aria-label="按类别筛选音标">
+              <button
+                class="filter-chip is-active"
+                type="button"
+                data-filter="all"
+                aria-pressed="true"
+              >
+                全部 <span class="chip-count" data-filter-count="all">—</span>
+              </button>
+              <button class="filter-chip" type="button" data-filter="vowel" aria-pressed="false">
+                元音 <span class="chip-count" data-filter-count="vowel">—</span>
+              </button>
+              <button class="filter-chip" type="button" data-filter="consonant" aria-pressed="false">
+                辅音 <span class="chip-count" data-filter-count="consonant">—</span>
+              </button>
+              <button class="filter-chip" type="button" data-filter="unvoiced" aria-pressed="false">
+                清辅音 <span class="chip-count" data-filter-count="unvoiced">—</span>
+              </button>
+              <button class="filter-chip" type="button" data-filter="voiced" aria-pressed="false">
+                浊辅音 <span class="chip-count" data-filter-count="voiced">—</span>
+              </button>
+            </div>
+          </div>
+          <p class="filter-tip">点击卡片查看口型与发音要点</p>
+        </div>
+
+        <div class="phoneme-grid" id="phoneme-grid" aria-live="polite" aria-busy="true">
+          <article class="phoneme-skeleton" aria-hidden="true"></article>
+          <article class="phoneme-skeleton" aria-hidden="true"></article>
+          <article class="phoneme-skeleton" aria-hidden="true"></article>
+          <article class="phoneme-skeleton" aria-hidden="true"></article>
+        </div>
+
+        <noscript>
+          <div class="inline-message">
+            这个页面需要启用 JavaScript 才能读取音标数据并记录学习进度。
+          </div>
+        </noscript>
+      </section>
+
+      <section
+        id="view-practice"
+        class="view"
+        data-view-panel="practice"
+        aria-labelledby="practice-title"
+        hidden
+      >
+        <div class="view-heading">
+          <p class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            LISTEN &amp; CHOOSE
+          </p>
+          <h1 id="practice-title">听一听，选出你听到的音标。</h1>
+          <p class="view-lede">
+            每次从音标表中随机抽一题，四选一。答错也没关系，看清正确答案，再听一遍就好。
+          </p>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-idle" id="practice-idle">
+            <div class="wave-visual" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="practice-idle-copy">
+              <p class="mini-label">随机听辨 · 四选一</p>
+              <h2>用耳朵做一次小测验</h2>
+              <p>准备好后点击开始，页面会播放一个音标的录音；没有录音时自动使用浏览器英文语音代读。</p>
+              <button class="button button-primary button-large" type="button" id="start-practice" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5.5 18 12 8 18.5v-13Z"></path>
+                </svg>
+                <span>开始练习</span>
+              </button>
+              <p class="practice-footnote">题库共 <span id="practice-total">48</span> 个音标 · 无音频文件时使用浏览器语音临时代读</p>
+            </div>
+          </div>
+
+          <div class="practice-session" id="practice-session" hidden>
+            <div class="practice-toolbar">
+              <span class="question-pill" id="question-number">第 1 题</span>
+              <span class="score-text" id="practice-score">答对 0 题</span>
+            </div>
+
+            <div class="practice-listen">
+              <p class="mini-label">听发音</p>
+              <button class="sound-orb" type="button" id="play-question" aria-label="播放题目发音">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"></path>
+                  <path d="M15 9a4.2 4.2 0 0 1 0 6"></path>
+                  <path d="M17.8 6.2a8.2 8.2 0 0 1 0 11.6"></path>
+                </svg>
+              </button>
+              <p class="listen-caption">点击按钮播放，可以反复听</p>
+            </div>
+
+            <p class="option-heading" id="option-heading">选择你听到的音标</p>
+            <div
+              class="option-grid"
+              id="practice-options"
+              role="group"
+              aria-labelledby="option-heading"
+            ></div>
+
+            <div class="feedback" id="practice-feedback" role="status" aria-live="polite" hidden></div>
+
+            <div class="practice-actions">
+              <button class="button button-ghost" type="button" id="restart-practice">重新开始</button>
+              <button class="button button-primary" type="button" id="next-question" disabled>
+                下一题 <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="view-progress"
+        class="view"
+        data-view-panel="progress"
+        aria-labelledby="progress-title"
+        hidden
+      >
+        <div class="view-heading">
+          <p class="eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            YOUR PROGRESS
+          </p>
+          <h1 id="progress-title">每学会一个音，都算数。</h1>
+          <p class="view-lede">
+            学习记录保存在当前浏览器里。关闭页面再回来，你的进度仍然在这里。
+          </p>
+        </div>
+
+        <div class="progress-panel">
+          <div class="ring-wrap">
+            <div
+              class="progress-ring"
+              id="progress-ring"
+              style="--progress: 0%"
+              role="progressbar"
+              aria-label="音标掌握率"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div class="ring-inner">
+                <strong id="progress-percent">0%</strong>
+                <span>掌握率</span>
+              </div>
+            </div>
+            <p>LOCAL PROGRESS</p>
+          </div>
+
+          <div class="progress-summary">
+            <p class="mini-label">学习总览</p>
+            <h2>已学 <span id="progress-learned">0</span> / <span id="progress-total">48</span> 个音标</h2>
+            <p class="progress-message" id="progress-message">
+              从音标表挑一个音开始吧，标记「已学」后就会记录在这里。
+            </p>
+            <div
+              class="progress-track progress-track-large"
+              role="progressbar"
+              aria-label="音标掌握率"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="progress-track-large"
+            >
+              <span id="progress-bar" style="width: 0%"></span>
+            </div>
+            <div class="progress-actions">
+              <button class="button button-primary" type="button" data-view-jump="phonemes">
+                继续学习
+              </button>
+              <button class="button button-danger" type="button" id="reset-progress" disabled>
+                重置进度
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <section class="learned-panel" aria-labelledby="learned-title">
+          <div class="panel-heading">
+            <div>
+              <p class="mini-label">YOUR COLLECTION</p>
+              <h2 id="learned-title">已学音标</h2>
+            </div>
+            <span class="count-pill" id="learned-list-count">0 个</span>
+          </div>
+          <div class="learned-list" id="learned-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>音标起步 <span aria-hidden="true">·</span> 用声音建立语感</p>
+      <p>本地离线版 <span aria-hidden="true">·</span> v6 · 48 音标</p>
+    </footer>
+
+    <div class="modal-layer" id="phoneme-modal" hidden>
+      <article
+        class="dialog-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialog-symbol"
+        tabindex="-1"
+      >
+        <button class="dialog-close" type="button" id="close-dialog" aria-label="关闭音标详情">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+          </svg>
+        </button>
+
+        <header class="dialog-header">
+          <div class="dialog-symbol-block">
+            <div class="dialog-badges" id="dialog-badges"></div>
+            <h2 class="dialog-symbol" id="dialog-symbol">/iː/</h2>
+            <p class="dialog-subtitle" id="dialog-subtitle">元音 · 长元音</p>
+          </div>
+
+          <div class="mouth-block">
+            <div class="mouth-frame mouth-frame--inline" id="mouth-frame">
+              <div
+                class="mouth-inline-svg"
+                id="dialog-mouth-svg"
+                role="img"
+                aria-label="口型示意图"
+              ></div>
+            </div>
+            <p class="mouth-caption">内联 SVG 口型示意 · 仅供入门参考</p>
+          </div>
+        </header>
+
+        <div class="dialog-content">
+          <section class="info-section">
+            <h3><span>01</span>发音要点</h3>
+            <p id="dialog-desc"></p>
+          </section>
+
+          <section class="info-section warning-section">
+            <h3><span>02</span>常见错误</h3>
+            <p id="dialog-mistake"></p>
+          </section>
+
+          <section class="info-section examples-section">
+            <div class="info-heading-row">
+              <h3><span>03</span>示例单词</h3>
+              <span>点击单词即可播放</span>
+            </div>
+            <div class="example-list" id="dialog-examples"></div>
+          </section>
+        </div>
+
+        <footer class="dialog-actions">
+          <button class="button button-primary" type="button" id="play-phoneme">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"></path>
+              <path d="M15 9a4.2 4.2 0 0 1 0 6"></path>
+              <path d="M17.8 6.2a8.2 8.2 0 0 1 0 11.6"></path>
+            </svg>
+            <span>播放本音标发音</span>
+          </button>
+          <button
+            class="button button-secondary"
+            type="button"
+            id="toggle-learned"
+            aria-pressed="false"
+          >
+            <svg class="learned-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12.5 4.2 4.2L19 7"></path>
+            </svg>
+            <span id="toggle-learned-label">标记为已学</span>
+          </button>
+        </footer>
+      </article>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+      <span class="toast-mark" aria-hidden="true">!</span>
+      <div class="toast-copy">
+        <strong id="toast-title">提示</strong>
+        <p id="toast-message"></p>
+      </div>
+      <button class="toast-close" type="button" id="toast-close" aria-label="关闭提示">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 6 12 12M18 6 6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>

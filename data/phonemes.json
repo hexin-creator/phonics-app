@@ -1,0 +1,50 @@
+[
+  {
+    "id": "i-long",
+    "symbol": "/iː/",
+    "type": "vowel",
+    "subtype": "",
+    "desc": "长元音。嘴角向两边拉开，像微笑；舌前部抬高靠近上颚，发音要饱满并适当拉长。",
+    "mistake": "常见错误是读得太短，变成 /ɪ/；也不要读成汉语“衣”那样短促、没有长度感的音。",
+    "examples": ["see", "tea", "green", "meet"],
+    "audioPath": "phonemes/i-long.mp3",
+    "exampleAudios": ["words/see.mp3", "words/tea.mp3", "words/green.mp3", "words/meet.mp3"],
+    "mouthSvg": "inline"
+  },
+  {
+    "id": "i-short",
+    "symbol": "/ɪ/",
+    "type": "vowel",
+    "subtype": "",
+    "desc": "短元音。嘴唇和下巴保持放松，开口比 /iː/ 稍大；舌前部抬起但不要过高，声音短而轻。",
+    "mistake": "容易拉长成 /iː/，或用汉语“衣”直接替代。注意收住声音，不要拖尾。",
+    "examples": ["sit", "big", "fish", "milk"],
+    "audioPath": "phonemes/i-short.mp3",
+    "exampleAudios": ["words/sit.mp3", "words/big.mp3", "words/fish.mp3", "words/milk.mp3"],
+    "mouthSvg": "inline"
+  },
+  {
+    "id": "theta",
+    "symbol": "/θ/",
+    "type": "consonant",
+    "subtype": "清辅音",
+    "desc": "清辅音。舌尖轻轻伸到上下门齿之间，气流从舌尖与牙齿的缝隙摩擦送出；声带不振动。",
+    "mistake": "常见错误是把舌尖藏回嘴里，读成 /s/ 或 /f/；也不要读成浊辅音 /ð/。",
+    "examples": ["think", "three", "bath", "math"],
+    "audioPath": "phonemes/theta.mp3",
+    "exampleAudios": ["words/think.mp3", "words/three.mp3", "words/bath.mp3", "words/math.mp3"],
+    "mouthSvg": "inline"
+  },
+  {
+    "id": "esh",
+    "symbol": "/ʃ/",
+    "type": "consonant",
+    "subtype": "清辅音",
+    "desc": "清辅音。双唇稍向前收圆，舌前部靠近齿龈后部，气流摩擦而出；声带不振动。",
+    "mistake": "容易和 /s/ 混淆。发 /ʃ/ 时嘴唇要略圆，声音更柔、更靠后，不要咧开嘴。",
+    "examples": ["she", "shop", "wash", "shoe"],
+    "audioPath": "phonemes/esh.mp3",
+    "exampleAudios": ["words/she.mp3", "words/shop.mp3", "words/wash.mp3", "words/shoe.mp3"],
+    "mouthSvg": "inline"
+  }
+]

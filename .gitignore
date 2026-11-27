@@ -1,0 +1,7 @@
+﻿.tools/
+.tmp/
+.check*/
+_qa*.html
+__pycache__/
+.DS_Store
+Thumbs.db
